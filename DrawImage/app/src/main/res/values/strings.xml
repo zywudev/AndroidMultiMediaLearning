@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DrawImage</string>
+    <string name="draw_image_view">使用ImageView绘制</string>
+    <string name="draw_surface_view">使用SurfaceView绘制</string>
+    <string name="draw_custom_view">使用自定义View绘制</string>
+
+</resources>
