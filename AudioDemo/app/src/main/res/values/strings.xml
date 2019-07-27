@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">AudioDemo</string>
-    <string name="start_record">开始录音</string>
-    <string name="stop_record">停止录音</string>
-    <string name="pcm_to_wav">PCM转WAV</string>
-    <string name="play">播放</string>
-    <string name="stop_play">停止播放</string>
-</resources>
