@@ -6,4 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".muxerextrator.MuxerExtractorActivity">
 
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="extract video"
+        android:textAllCaps="false"
+        android:onClick="onExtractVideoClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="extract audio"
+        android:textAllCaps="false"
+        android:onClick="onExtractAudioClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="muxer video and audio"
+        android:textAllCaps="false"
+        android:onClick="onMuxerVideoAndAudioClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button1" />
+
 </android.support.constraint.ConstraintLayout>

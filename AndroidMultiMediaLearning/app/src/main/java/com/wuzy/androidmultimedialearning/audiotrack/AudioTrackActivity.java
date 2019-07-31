@@ -10,6 +10,9 @@ import com.wuzy.androidmultimedialearning.util.FileUtil;
 
 import java.io.File;
 
+/**
+ * AudioTrack 播放录音
+ */
 public class AudioTrackActivity extends AppCompatActivity {
 
     private AudioTracker mAudioTracker;

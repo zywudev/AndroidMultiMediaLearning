@@ -1,7 +1,6 @@
 package com.wuzy.androidmultimedialearning;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import com.wuzy.androidmultimedialearning.camera.CameraPreviewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.CustomViewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.ImageViewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.SurfaceViewActivity;
+import com.wuzy.androidmultimedialearning.muxerextrator.MuxerExtractorActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,5 +78,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         builder.show();
+    }
+
+    public void onMuxerAndExtractorButtonClick(View view) {
+        this.startActivity(new Intent(this, MuxerExtractorActivity.class));
     }
 }

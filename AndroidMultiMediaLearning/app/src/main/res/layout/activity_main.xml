@@ -50,4 +50,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_audio_track" />
 
+    <Button
+        android:id="@+id/btn_muxer_and_extractor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Muxer And Extractor"
+        android:textAllCaps="false"
+        android:onClick="onMuxerAndExtractorButtonClick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_camera" />
+
 </android.support.constraint.ConstraintLayout>

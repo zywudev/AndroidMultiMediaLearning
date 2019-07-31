@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".muxerextrator.MuxerExtractorActivity"></activity>
+        <activity android:name=".mediacodec.MediaCodecActivity"></activity>
+        <activity android:name=".muxerextrator.MuxerExtractorActivity" />
         <activity android:name=".audiotrack.AudioTrackActivity" />
         <activity android:name=".audiorecord.AudioRecordActivity" />
         <activity android:name=".MainActivity">

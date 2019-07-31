@@ -138,6 +138,16 @@ public class FileUtil {
         return wavFileDir;
     }
 
+    public static File getMuxerAndExtractorDir(Context context) {
+        File fileDir = getFileDir(context);
+        File muxerAndExtractorDir = new File(fileDir, "muxerandextractor");
+        if (!muxerAndExtractorDir.exists()) {
+            muxerAndExtractorDir.mkdirs();
+        }
+        return muxerAndExtractorDir;
+    }
+
+
     public static File getFileDir(Context context) {
         File filesDir = context.getExternalFilesDir(null);
         if (filesDir == null) {

@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.wuzy.androidmultimedialearning.R;
 import com.wuzy.androidmultimedialearning.util.FileUtil;
 
+/**
+ * AudioRecord 录音
+ */
 public class AudioRecordActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "AudioRecordActivity";
 
