@@ -1,4 +1,4 @@
-# AndroidMediaNotes
+# AndroidMultiMediaLearning
 
 记录 Android 音视频学习笔记。
 
