@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import com.wuzy.androidmultimedialearning.camera.CameraPreviewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.CustomViewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.ImageViewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.SurfaceViewActivity;
+import com.wuzy.androidmultimedialearning.mediacodec.MediaCodecActivity;
 import com.wuzy.androidmultimedialearning.muxerextrator.MuxerExtractorActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, 0);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     public void onDrawImageButtonClick(View view) {
@@ -82,5 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onMuxerAndExtractorButtonClick(View view) {
         this.startActivity(new Intent(this, MuxerExtractorActivity.class));
+    }
+
+    public void onMediaCodecButtonClick(View view) {
+        this.startActivity(new Intent(this, MediaCodecActivity.class));
     }
 }

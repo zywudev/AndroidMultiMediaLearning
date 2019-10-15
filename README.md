@@ -14,6 +14,8 @@
 
 6\. [使用 MediaExtractor 和 MediaMuxer 分离合成音视频](http://wuzhangyang.com/2019/08/01/android-mediamuxer-and-mediaextractor/)
 
+7\. [ijkplayer 编译实践]( http://wuzhangyang.com/2019/10/14/compile-ijkplayer/ )
+
 由于笔者水平有限，文章难免出现错误。有任何疑问欢迎来信 zywu.dev@gmail.com 交流。
 
 另外，欢迎关注我的微信公众号 JaqenAndroid 获取最新的文章和资讯。

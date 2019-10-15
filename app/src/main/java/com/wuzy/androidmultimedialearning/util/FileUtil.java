@@ -108,6 +108,15 @@ public class FileUtil {
         return assetsDir;
     }
 
+    public static File getAacFileDir(Context context) {
+        File fileDir = getFileDir(context);
+        File aacFileDir = new File(fileDir,"aac");
+        if (!aacFileDir.exists()) {
+            aacFileDir.mkdirs();
+        }
+        return aacFileDir;
+    }
+
     public static File getPcmFileDir(Context context) {
         File fileDir = getFileDir(context);
         File pcmFileDir = new File(fileDir, "pcm");
