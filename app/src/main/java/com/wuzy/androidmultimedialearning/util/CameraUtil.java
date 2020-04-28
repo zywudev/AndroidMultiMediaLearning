@@ -8,11 +8,6 @@ import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.view.Surface;
 
-/**
- * @author wuzy
- * @date 2019/7/18
- * @description
- */
 public class CameraUtil {
 
     private CameraUtil() {

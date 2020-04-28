@@ -16,22 +16,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".mediacodec.MediaCodecActivity"></activity>
-        <activity android:name=".muxerextrator.MuxerExtractorActivity" />
-        <activity android:name=".audiotrack.AudioTrackActivity" />
-        <activity android:name=".audiorecord.AudioRecordActivity" />
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".drawimage.ImageViewActivity" />
-        <activity android:name=".drawimage.CustomViewActivity" />
-        <activity android:name=".drawimage.SurfaceViewActivity" />
+        <activity
+            android:name=".drawimage.ImageViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".drawimage.CustomViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".drawimage.SurfaceViewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".audio.AudioRecordAudioTrackActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mediacodec.MediaCodecActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".muxerextrator.MuxerExtractorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".camera.CameraPreviewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 

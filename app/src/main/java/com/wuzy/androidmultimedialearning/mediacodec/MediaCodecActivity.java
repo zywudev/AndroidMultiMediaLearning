@@ -23,7 +23,6 @@ public class MediaCodecActivity extends AppCompatActivity {
         setContentView(R.layout.activity_media_codec);
     }
 
-
     public void onEncodeClick(View view) {
         ThreadHelper.getInstance().execute(() -> {
             File pcmFile = new File(FileUtil.getExternalAssetsDir(MediaCodecActivity.this), "test.pcm");
@@ -41,23 +40,15 @@ public class MediaCodecActivity extends AppCompatActivity {
     }
 
     public void onDecodeClick(View view) {
-        ThreadHelper.getInstance().execute(new Runnable() {
-            @Override
-            public void run() {
-                // 44.1kHz采样率，单通道
-                File aacFile = new File(FileUtil.getExternalAssetsDir(MediaCodecActivity.this), "test.aac");
-                File pcmFile = new File(FileUtil.getPcmFileDir(MediaCodecActivity.this), "test_output.pcm");
-                try {
-                    AacPcmCoder.decodeAacTomPcm(aacFile, pcmFile);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(MediaCodecActivity.this, "解码完成", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } catch (IOException e) {
-                    Log.e(TAG, "解码失败" + e.getMessage());
-                }
+        ThreadHelper.getInstance().execute(() -> {
+            // 44.1kHz采样率，单通道
+            File aacFile = new File(FileUtil.getExternalAssetsDir(MediaCodecActivity.this), "test.aac");
+            File pcmFile = new File(FileUtil.getPcmFileDir(MediaCodecActivity.this), "test_output.pcm");
+            try {
+                AacPcmCoder.decodeAacTomPcm(aacFile, pcmFile);
+                runOnUiThread(() -> Toast.makeText(MediaCodecActivity.this, "解码完成", Toast.LENGTH_SHORT).show());
+            } catch (IOException e) {
+                Log.e(TAG, "解码失败" + e.getMessage());
             }
         });
     }

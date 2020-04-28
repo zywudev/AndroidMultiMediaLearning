@@ -8,68 +8,44 @@
 
     <Button
         android:id="@+id/btn_draw_image"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Draw Image"
         android:textAllCaps="false"
-        android:onClick="onDrawImageButtonClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_audio_record"
-        android:layout_width="0dp"
+        android:id="@+id/btn_audio_record_audio_track"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AudioRecord"
+        android:text="AudioRecord / AndioTrack"
         android:textAllCaps="false"
-        android:onClick="onAudioRecordButtonClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_draw_image" />
 
     <Button
-        android:id="@+id/btn_audio_track"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="AudioTrack"
-        android:textAllCaps="false"
-        android:onClick="onAudioTrackButtonClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_audio_record" />
-
-    <Button
         android:id="@+id/btn_camera"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CameraPreview"
         android:textAllCaps="false"
-        android:onClick="onCameraButtonClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_audio_track" />
+        app:layout_constraintTop_toBottomOf="@id/btn_audio_record_audio_track" />
 
     <Button
         android:id="@+id/btn_muxer_and_extractor"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Muxer And Extractor"
         android:textAllCaps="false"
-        android:onClick="onMuxerAndExtractorButtonClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_camera" />
 
     <Button
         android:id="@+id/btn_mediacodec"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mediacodec"
         android:textAllCaps="false"
-        android:onClick="onMediaCodecButtonClick"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_muxer_and_extractor" />
 
 </android.support.constraint.ConstraintLayout>

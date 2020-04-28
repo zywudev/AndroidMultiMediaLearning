@@ -3,16 +3,12 @@ package com.wuzy.androidmultimedialearning;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.os.Debug;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.wuzy.androidmultimedialearning.audiorecord.AudioRecordActivity;
-import com.wuzy.androidmultimedialearning.audiotrack.AudioTrackActivity;
+import com.wuzy.androidmultimedialearning.audio.AudioRecordAudioTrackActivity;
 import com.wuzy.androidmultimedialearning.camera.CameraPreviewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.CustomViewActivity;
 import com.wuzy.androidmultimedialearning.drawimage.ImageViewActivity;
@@ -20,13 +16,16 @@ import com.wuzy.androidmultimedialearning.drawimage.SurfaceViewActivity;
 import com.wuzy.androidmultimedialearning.mediacodec.MediaCodecActivity;
 import com.wuzy.androidmultimedialearning.muxerextrator.MuxerExtractorActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    protected void initView() {
+        super.initView();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -34,14 +33,43 @@ public class MainActivity extends AppCompatActivity {
                     Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA}, 0);
         }
 
+        findViewById(R.id.btn_draw_image).setOnClickListener(this);
+        findViewById(R.id.btn_audio_record_audio_track).setOnClickListener(this);
+        findViewById(R.id.btn_camera).setOnClickListener(this);
+        findViewById(R.id.btn_muxer_and_extractor).setOnClickListener(this);
+        findViewById(R.id.btn_mediacodec).setOnClickListener(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected boolean enableBack() {
+        return false;
     }
 
-    public void onDrawImageButtonClick(View view) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_draw_image:
+                showDrawImageDialog();
+                break;
+            case R.id.btn_audio_record_audio_track:
+                startActivity(new Intent(this, AudioRecordAudioTrackActivity.class));
+                break;
+            case R.id.btn_camera:
+                showCameraDialog();
+                break;
+            case R.id.btn_muxer_and_extractor:
+                break;
+            case R.id.btn_mediacodec:
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 点击绘制图片按钮
+     */
+    public void showDrawImageDialog() {
         String[] types = new String[]{"ImageView", "CustomView", "SurfaceView"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("选择绘图类型");
@@ -57,15 +85,10 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void onAudioRecordButtonClick(View view) {
-        startActivity(new Intent(this, AudioRecordActivity.class));
-    }
-
-    public void onAudioTrackButtonClick(View view) {
-        startActivity(new Intent(this, AudioTrackActivity.class));
-    }
-
-    public void onCameraButtonClick(View view) {
+    /**
+     *
+     */
+    public void showCameraDialog() {
         String[] types = new String[]{"Camera SurfaceView", "Camera TextureView", "Camera2 SurfaceView", "Camera2 TextureView"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("选择预览类型");
@@ -87,11 +110,4 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void onMuxerAndExtractorButtonClick(View view) {
-        this.startActivity(new Intent(this, MuxerExtractorActivity.class));
-    }
-
-    public void onMediaCodecButtonClick(View view) {
-        this.startActivity(new Intent(this, MediaCodecActivity.class));
-    }
 }

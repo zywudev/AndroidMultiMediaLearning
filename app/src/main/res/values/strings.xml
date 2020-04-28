@@ -1,7 +1,12 @@
 <resources>
-    <string name="app_name">AndroidMultiMediaLearning</string>
+    <string name="app_name">Android音视频Demo</string>
     <string name="click_record_audio">点击录音</string>
     <string name="stop_record_audio">停止录音</string>
-    <string name="play">播放</string>
-    <string name="stop">停止</string>
+    <string name="image_view">ImageView</string>
+    <string name="surface_view">SurfaceView</string>
+    <string name="custom_view">CustomView</string>
+    <string name="audio_record_and_audio_track">AudioRecord和AudioTrack</string>
+    <string name="play_audio">播放录音</string>
+    <string name="stop_play">停止播放</string>
+    <string name="pcm_to_wav">PCM保存为WAV文件</string>
 </resources>

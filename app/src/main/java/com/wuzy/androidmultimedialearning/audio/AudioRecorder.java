@@ -1,12 +1,16 @@
-package com.wuzy.androidmultimedialearning.audiorecord;
+package com.wuzy.androidmultimedialearning.audio;
 
 import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.wuzy.androidmultimedialearning.util.FileUtil;
+import com.wuzy.androidmultimedialearning.util.ThreadHelper;
 import com.wuzy.androidmultimedialearning.util.wav.PcmToWav;
 
 import java.io.BufferedOutputStream;
@@ -18,9 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @author wuzy
- * @date 2019/7/17
- * @description
+ * 录音类
  */
 public class AudioRecorder {
 
@@ -36,8 +38,6 @@ public class AudioRecorder {
     private final static int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
     // 缓冲区字节大小
     private int mBufferSizeInBytes;
-    // 单任务线程池
-    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
     // 录音对象
     private AudioRecord mAudioRecord;
     // 录音状态
@@ -78,6 +78,7 @@ public class AudioRecorder {
             throw new IllegalStateException("AudioRecord is not available, minBufferSize: " + mBufferSizeInBytes);
         }
 
+        // 创建 AudioRecord
         mAudioRecord = new AudioRecord(audioSource, sampleRateInHz, channelConfig, audioFormat, mBufferSizeInBytes);
         int state = mAudioRecord.getState();
         Log.i(TAG, "createAudio state: " + state + ", initialized: " + (state == AudioRecord.STATE_INITIALIZED));
@@ -101,8 +102,10 @@ public class AudioRecorder {
         //将录音状态设置成正在录音状态
         mStatus = Status.STATUS_START;
 
+        Toast.makeText(mContext, "正在录音", Toast.LENGTH_SHORT).show();
+
         //使用线程池管理线程
-        mExecutorService.execute(() -> {
+        ThreadHelper.getInstance().execute(() -> {
             try {
                 writeAudioDataToFile();
             } catch (IOException e) {
@@ -136,8 +139,6 @@ public class AudioRecorder {
             mAudioRecord.release();
             mAudioRecord = null;
         }
-
-        makePCMFileToWAVFile();
     }
 
     /**
@@ -186,27 +187,14 @@ public class AudioRecorder {
             if (mRecordStreamListener != null) {
                 mRecordStreamListener.finishRecord();
             }
+            ThreadHelper.getInstance().runOnUiThread(() -> {
+                Toast.makeText(mContext, "录音完成", Toast.LENGTH_SHORT).show();
+            });
         } finally {
             if (bos != null) {
                 bos.close();// 关闭写入流
             }
         }
-    }
-
-    /**
-     * 将单个pcm文件转化为wav文件
-     */
-    private void makePCMFileToWAVFile() {
-        mExecutorService.execute(() -> {
-            String wavFilePath = FileUtil.getWavFilePath(mContext, mPcmFileName);
-            if (PcmToWav.makePcmFileToWavFile(FileUtil.getPcmFilePath(mContext, mPcmFileName), wavFilePath, false)) {
-                //操作成功
-                Log.i(TAG, "保存wav文件成功 " + wavFilePath);
-            } else {
-                //操作失败
-                Log.e(TAG, "makePCMFileToWAVFile fail");
-            }
-        });
     }
 
     public void setRecordStreamListener(RecordStreamListener recordStreamListener) {
@@ -227,9 +215,6 @@ public class AudioRecorder {
         STATUS_STOP
     }
 
-    /**
-     * invoked from work thread
-     */
     public interface RecordStreamListener {
         /**
          * 录音过程中

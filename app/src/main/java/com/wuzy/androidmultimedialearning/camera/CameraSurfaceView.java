@@ -13,11 +13,6 @@ import com.wuzy.androidmultimedialearning.util.ThreadHelper;
 
 import java.io.IOException;
 
-/**
- * @author wuzy
- * @date 2019/7/9
- * @description
- */
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = "CameraSurfaceView";

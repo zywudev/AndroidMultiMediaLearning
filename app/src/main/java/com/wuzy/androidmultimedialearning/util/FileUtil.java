@@ -17,11 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author wuzy
- * @date 2019/7/5
- * @description
- */
 public class FileUtil {
 
     private static final String TAG = "FileUtil";
@@ -163,6 +158,11 @@ public class FileUtil {
             filesDir = context.getFilesDir();
         }
         return filesDir;
+    }
+
+    public static Bitmap getDrawImageBitmap(Context context) {
+        Bitmap bitmap = BitmapFactory.decodeFile(new File(FileUtil.getExternalAssetsDir(context), "jaqen.png").getPath());
+        return bitmap;
     }
 
     /**

@@ -23,11 +23,7 @@ import android.view.SurfaceView;
 
 import java.util.Arrays;
 
-/**
- * @author wuzy
- * @date 2019/7/15
- * @description
- */
+
 public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     private Context mContext;

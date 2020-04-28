@@ -1,4 +1,4 @@
-package com.wuzy.androidmultimedialearning.audiotrack;
+package com.wuzy.androidmultimedialearning.audio;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -6,23 +6,19 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.wuzy.androidmultimedialearning.util.ThreadHelper;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
- * @author wuzy
- * @date 2019/7/17
- * @description
+ * 播放录音类
  */
 public class AudioTracker {
 
@@ -41,10 +37,6 @@ public class AudioTracker {
     private String mFilePath;
     // 状态
     private volatile Status mStatus = Status.STATUS_NO_READY;
-    // 单任务线程池
-    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
-
-    private Handler mMainHandler = new Handler(Looper.getMainLooper());
 
     private Context mContext;
 
@@ -91,21 +83,27 @@ public class AudioTracker {
             throw new IllegalStateException("正在播放...");
         }
         Log.d(TAG, "===start===");
-        mExecutorService.execute(() -> {
+
+        ThreadHelper.getInstance().execute(() -> {
             try {
                 playAudioData();
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
-                mMainHandler.post(() -> Toast.makeText(mContext, "播放出错", Toast.LENGTH_SHORT).show());
+                ThreadHelper.getInstance().runOnUiThread(() -> {
+                    Toast.makeText(mContext, "播放出错", Toast.LENGTH_SHORT).show();
+                });
             }
         });
+
         mStatus = Status.STATUS_START;
     }
 
     private void playAudioData() throws IOException {
         InputStream dis = null;
         try {
-            mMainHandler.post(() -> Toast.makeText(mContext, "播放开始", Toast.LENGTH_SHORT).show());
+            ThreadHelper.getInstance().runOnUiThread(() -> {
+                Toast.makeText(mContext, "播放开始", Toast.LENGTH_SHORT).show();
+            });
             dis = new DataInputStream(new BufferedInputStream(new FileInputStream(mFilePath)));
             byte[] bytes = new byte[mBufferSizeInBytes];
             int length;
@@ -114,7 +112,9 @@ public class AudioTracker {
             while ((length = dis.read(bytes)) != -1 && mStatus == Status.STATUS_START) {
                 mAudioTrack.write(bytes, 0, length);
             }
-            mMainHandler.post(() -> Toast.makeText(mContext, "播放结束", Toast.LENGTH_SHORT).show());
+            ThreadHelper.getInstance().runOnUiThread(() -> {
+                Toast.makeText(mContext, "播放结束", Toast.LENGTH_SHORT).show();
+            });
         } finally {
             if (dis != null) {
                 dis.close();

@@ -13,11 +13,6 @@ import com.wuzy.androidmultimedialearning.util.FileUtil;
 
 import java.io.File;
 
-/**
- * @author wuzy
- * @date 2019/7/5
- * @description
- */
 public class CustomView extends View {
 
     private Paint mPaint;
@@ -36,7 +31,7 @@ public class CustomView extends View {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        mBitmap = BitmapFactory.decodeFile(new File(FileUtil.getExternalAssetsDir(getContext()), "jaqen.png").getPath());
+        mBitmap = FileUtil.getDrawImageBitmap(getContext());
 
     }
 

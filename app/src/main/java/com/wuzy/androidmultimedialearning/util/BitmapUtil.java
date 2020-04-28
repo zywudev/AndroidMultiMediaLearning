@@ -9,11 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @author wuzy
- * @date 2019/7/17
- * @description
- */
 public class BitmapUtil {
 
     public static void writeBitmapLocal(Bitmap bitmap, File dest) throws IOException {

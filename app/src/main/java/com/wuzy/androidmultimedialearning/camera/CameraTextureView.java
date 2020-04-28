@@ -12,11 +12,6 @@ import com.wuzy.androidmultimedialearning.util.ThreadHelper;
 
 import java.io.IOException;
 
-/**
- * @author wuzy
- * @date 2019/7/10
- * @description
- */
 public class CameraTextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private Camera mCamera;

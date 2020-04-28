@@ -23,11 +23,6 @@ import android.view.TextureView;
 
 import java.util.Arrays;
 
-/**
- * @author wuzy
- * @date 2019/7/16
- * @description
- */
 public class Camera2TextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private Context mContext;

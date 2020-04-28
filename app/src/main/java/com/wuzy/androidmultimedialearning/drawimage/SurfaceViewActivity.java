@@ -8,20 +8,33 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
+import com.wuzy.androidmultimedialearning.BaseActivity;
 import com.wuzy.androidmultimedialearning.R;
 import com.wuzy.androidmultimedialearning.util.FileUtil;
 
 import java.io.File;
 
-public class SurfaceViewActivity extends AppCompatActivity {
+public class SurfaceViewActivity extends BaseActivity {
+
+    private SurfaceView mSurfaceView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_surface_view);
-        SurfaceView surfaceView = findViewById(R.id.surface_view);
-        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+    protected int getTitleResId() {
+        return R.string.surface_view;
+    }
+
+    @Override
+    protected View getContentView() {
+        mSurfaceView = new SurfaceView(this);
+        return mSurfaceView;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 if (holder == null) {
@@ -31,10 +44,10 @@ public class SurfaceViewActivity extends AppCompatActivity {
                 Paint paint = new Paint();
                 paint.setAntiAlias(true);
                 paint.setStyle(Paint.Style.STROKE);
-                Bitmap bitmap = BitmapFactory.decodeFile(new File(FileUtil.getExternalAssetsDir(SurfaceViewActivity.this), "jaqen.png").getPath());
 
                 Canvas canvas = holder.lockCanvas();
-                canvas.drawBitmap(bitmap, 0, 0, paint);
+                // 绘制图片
+                canvas.drawBitmap(FileUtil.getDrawImageBitmap(SurfaceViewActivity.this), 0, 0, paint);
                 holder.unlockCanvasAndPost(canvas);
             }
 
@@ -48,8 +61,5 @@ public class SurfaceViewActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
-
 }

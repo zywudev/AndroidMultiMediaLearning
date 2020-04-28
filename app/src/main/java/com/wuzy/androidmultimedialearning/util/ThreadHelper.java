@@ -15,19 +15,17 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * @author wuzy
- * @date 2019/7/17
- * @description
- */
 public class ThreadHelper {
+
     private static final String TAG = "ThreadHelper";
+
     private Handler mMainHandler;
     private ExecutorService mExecutorService;
     private Handler mWorkHandler;
 
     private ThreadHelper() {
         mMainHandler = new Handler(Looper.getMainLooper());
+
         ThreadFactory threadFactory = new ThreadFactory() {
             private final AtomicInteger mCount = new AtomicInteger(1);
 
@@ -36,6 +34,7 @@ public class ThreadHelper {
                 return new Thread(r, "ThreadHelper #".concat(String.valueOf(mCount.getAndIncrement())));
             }
         };
+
         int cpuCount = Runtime.getRuntime().availableProcessors();
         int corePoolSize = cpuCount + 1;
         int maxPoolSize = cpuCount * 2 + 1;
