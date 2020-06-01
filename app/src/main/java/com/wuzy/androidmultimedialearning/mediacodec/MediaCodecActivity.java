@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wuzy.androidmultimedialearning.BaseActivity;
 import com.wuzy.androidmultimedialearning.R;
 import com.wuzy.androidmultimedialearning.util.FileUtil;
 import com.wuzy.androidmultimedialearning.util.ThreadHelper;
@@ -13,17 +14,40 @@ import com.wuzy.androidmultimedialearning.util.ThreadHelper;
 import java.io.File;
 import java.io.IOException;
 
-public class MediaCodecActivity extends AppCompatActivity {
+public class MediaCodecActivity extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG = "MediaCodecActivity";
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_media_codec);
+    protected void initView() {
+        findViewById(R.id.btn_pcm2aac).setOnClickListener(this);
+        findViewById(R.id.btn_aac2pcm).setOnClickListener(this);
     }
 
-    public void onEncodeClick(View view) {
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_media_codec;
+    }
+
+    @Override
+    protected int getTitleResId() {
+        return R.string.mediacodec;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_aac2pcm:
+                aac2pcm();
+                break;
+            case R.id.btn_pcm2aac:
+                pcm2aac();
+                break;
+        }
+    }
+
+    private void aac2pcm() {
         ThreadHelper.getInstance().execute(() -> {
             File pcmFile = new File(FileUtil.getExternalAssetsDir(MediaCodecActivity.this), "test.pcm");
             File aacFile = new File(FileUtil.getAacFileDir(MediaCodecActivity.this), "test_output.aac");
@@ -39,7 +63,7 @@ public class MediaCodecActivity extends AppCompatActivity {
         });
     }
 
-    public void onDecodeClick(View view) {
+    public void pcm2aac() {
         ThreadHelper.getInstance().execute(() -> {
             // 44.1kHz采样率，单通道
             File aacFile = new File(FileUtil.getExternalAssetsDir(MediaCodecActivity.this), "test.aac");
@@ -52,6 +76,7 @@ public class MediaCodecActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

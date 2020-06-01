@@ -9,4 +9,7 @@
     <string name="play_audio">播放录音</string>
     <string name="stop_play">停止播放</string>
     <string name="pcm_to_wav">PCM保存为WAV文件</string>
+    <string name="camera_preview">相机预览</string>
+    <string name="muxer_extractor">Muxer和Extractor</string>
+    <string name="mediacodec">MediaCodec</string>
 </resources>

@@ -8,37 +8,33 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_extract_video"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:text="extract video"
         android:textAllCaps="false"
-        android:onClick="onExtractVideoClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_extract_audio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="extract audio"
         android:textAllCaps="false"
-        android:onClick="onExtractAudioClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_extract_video" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_muxer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="muxer video and audio"
         android:textAllCaps="false"
-        android:onClick="onMuxerVideoAndAudioClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button1" />
+        app:layout_constraintTop_toBottomOf="@id/btn_extract_audio" />
 
 </android.support.constraint.ConstraintLayout>

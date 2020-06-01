@@ -8,18 +8,17 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_pcm2aac"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="编码 PCM2AAC"
         android:textAllCaps="false"
-        android:onClick="onEncodeClick"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_aac2pcm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="解码 AAC2PCM"
@@ -27,6 +26,6 @@
         android:onClick="onDecodeClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_pcm2aac" />
 
 </android.support.constraint.ConstraintLayout>

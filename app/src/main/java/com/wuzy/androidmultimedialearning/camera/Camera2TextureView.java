@@ -21,12 +21,13 @@ import android.util.AttributeSet;
 import android.view.Surface;
 import android.view.TextureView;
 
+import com.wuzy.androidmultimedialearning.util.ThreadHelper;
+
 import java.util.Arrays;
 
 public class Camera2TextureView extends TextureView implements TextureView.SurfaceTextureListener {
 
     private Context mContext;
-    private Handler mWorkHandler;
     private String mCameraId;
     private CameraDevice mCameraDevice;
     private ImageReader mImageReader;
@@ -52,11 +53,12 @@ public class Camera2TextureView extends TextureView implements TextureView.Surfa
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        HandlerThread handlerThread = new HandlerThread("camera2");
-        handlerThread.start();
-        mWorkHandler = new Handler(handlerThread.getLooper());
-        checkCamera();
-        openCamera();
+
+        ThreadHelper.getInstance().runOnHandlerThread(() -> {
+            checkCamera();
+            openCamera();
+
+        });
     }
 
     @Override
@@ -73,7 +75,6 @@ public class Camera2TextureView extends TextureView implements TextureView.Surfa
         if (mImageReader != null) {
             mImageReader.close();
         }
-        mWorkHandler.getLooper().quitSafely();
         return true;
     }
 
@@ -134,7 +135,7 @@ public class Camera2TextureView extends TextureView implements TextureView.Surfa
                             //buffer.get(data);
                             image.close();
                         }
-                    }, mWorkHandler);
+                    }, null);
 
                     createCameraPreview();
                 }
@@ -155,7 +156,7 @@ public class Camera2TextureView extends TextureView implements TextureView.Surfa
                     camera.close();
                     mCameraDevice = null;
                 }
-            }, mWorkHandler);
+            }, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -186,7 +187,7 @@ public class Camera2TextureView extends TextureView implements TextureView.Surfa
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
                 }
-            }, mWorkHandler);
+            }, null);
         } catch (Exception e) {
         }
     }

@@ -4,11 +4,11 @@ import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.wuzy.androidmultimedialearning.BaseActivity;
 import com.wuzy.androidmultimedialearning.R;
 import com.wuzy.androidmultimedialearning.util.FileUtil;
 
@@ -19,30 +19,49 @@ import java.nio.ByteBuffer;
 /**
  * 音视频混合和分离
  */
-public class MuxerExtractorActivity extends AppCompatActivity {
+public class MuxerExtractorActivity extends BaseActivity implements View.OnClickListener{
 
     public static final String OUTPUT_VIDEO = "output_video.mp4";
     public static final String OUTPUT_AUDIO = "output_audio.mp3";
     private static final String VIDEO_SOURCE = "input.mp4";
     private static final String VIDEO_OUTPUT = "output.mp4";
 
+    private Button mBtnExtractVideo, mBtnExtractAudio, mBtnMuxer;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_muxer_extractor);
+    protected int getLayoutResId() {
+        return R.layout.activity_muxer_extractor;
+    }
+
+    @Override
+    protected int getTitleResId() {
+        return R.string.muxer_extractor;
+    }
+
+    @Override
+    protected void initView() {
+        mBtnExtractAudio = findViewById(R.id.btn_extract_audio);
+        mBtnExtractVideo = findViewById(R.id.btn_extract_video);
+        mBtnMuxer = findViewById(R.id.btn_muxer);
+        mBtnExtractVideo.setOnClickListener(this);
+        mBtnExtractAudio.setOnClickListener(this);
+        mBtnMuxer.setOnClickListener(this);
     }
 
 
-    public void onExtractVideoClick(View view) {
-        extractVideo();
-    }
-
-    public void onExtractAudioClick(View view) {
-        extractAudio();
-    }
-
-    public void onMuxerVideoAndAudioClick(View view) {
-        muxerVideoAndAudio();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_extract_audio:
+                extractAudio();
+                break;
+            case R.id.btn_extract_video:
+                extractVideo();
+                break;
+            case R.id.btn_muxer:
+                muxerVideoAndAudio();
+                break;
+        }
     }
 
     /**
@@ -70,6 +89,7 @@ public class MuxerExtractorActivity extends AppCompatActivity {
                     break;
                 }
             }
+
             mediaExtractor.selectTrack(videoIndex);
             File outFile = new File(FileUtil.getMuxerAndExtractorDir(this), OUTPUT_VIDEO);
             if (outFile.exists()) {
@@ -142,6 +162,7 @@ public class MuxerExtractorActivity extends AppCompatActivity {
             if (outFile.exists()) {
                 outFile.delete();
             }
+
             mediaMuxer = new MediaMuxer(outFile.getAbsolutePath(), MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
             // 将音频轨添加到 MediaMuxer，返回新的轨道
             int trackIndex = mediaMuxer.addTrack(mediaFormat);
@@ -180,8 +201,10 @@ public class MuxerExtractorActivity extends AppCompatActivity {
      * 将 output_video.mp4 和 output_audio.mp3 合成为完整的视频 output.mp4
      */
     private void muxerVideoAndAudio() {
+
         MediaExtractor videoExtractor = new MediaExtractor();
         MediaExtractor audioExtractor = new MediaExtractor();
+
         MediaMuxer mediaMuxer = null;
         File fileDir = FileUtil.getMuxerAndExtractorDir(this);
         try {
@@ -274,7 +297,6 @@ public class MuxerExtractorActivity extends AppCompatActivity {
             videoExtractor.release();
             audioExtractor.release();
         }
-
-
     }
+
 }

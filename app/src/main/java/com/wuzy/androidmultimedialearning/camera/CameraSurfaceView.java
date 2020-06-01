@@ -36,7 +36,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceCreated(final SurfaceHolder holder) {
-        Log.e(TAG, "surfaceCreated: " );
+        Log.e(TAG, "surfaceCreated: ");
         // 异步预览
         ThreadHelper.getInstance().runOnHandlerThread(() -> {
             openCamera();
@@ -46,12 +46,12 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.e(TAG, "surfaceChanged: " );
+        Log.e(TAG, "surfaceChanged: ");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.e(TAG, "surfaceDestroyed: " );
+        Log.e(TAG, "surfaceDestroyed: ");
         releaseCamera();
     }
 
@@ -59,15 +59,18 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
      * 打开相机
      */
     private void openCamera() {
+        // 有多少个摄像头
         int number = Camera.getNumberOfCameras();
-        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+
         for (int i = 0; i < number; ++i) {
+            Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+
             Camera.getCameraInfo(i, cameraInfo);
-            // 打开后置摄像头
+
+            // 后置摄像头
             if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 mCamera = Camera.open(i);
                 CameraUtil.setCameraDisplayOrientation(mActivity, i, mCamera);
-                break;
             }
         }
     }
@@ -95,7 +98,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
      * 关闭相机
      */
     private void releaseCamera() {
-        Log.e(TAG, "releaseCamera: " );
+        Log.e(TAG, "releaseCamera: ");
         if (mCamera != null) {
             try {
                 mCamera.stopPreview();

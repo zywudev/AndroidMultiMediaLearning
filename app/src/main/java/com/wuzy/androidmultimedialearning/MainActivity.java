@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 showCameraDialog();
                 break;
             case R.id.btn_muxer_and_extractor:
+                startActivity(new Intent(this,MuxerExtractorActivity.class));
                 break;
             case R.id.btn_mediacodec:
                 break;
@@ -109,5 +110,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
         builder.show();
     }
+
 
 }

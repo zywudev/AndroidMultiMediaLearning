@@ -12,6 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+/**
+ * AAC 编解码
+ */
 public class AacPcmCoder {
     private static final String TAG = "AacPcmCoder";
     private final static String AUDIO_MIME = "audio/mp4a-latm";
@@ -28,6 +31,7 @@ public class AacPcmCoder {
         FileInputStream fisRawAudio = null;
         FileOutputStream fosAccAudio = null;
         MediaCodec audioEncoder = createAudioEncoder();
+
         try {
             fisRawAudio = new FileInputStream(inPcmFile);
             fosAccAudio = new FileOutputStream(outAacFile);
@@ -55,10 +59,12 @@ public class AacPcmCoder {
                         if (bufferSize != rawInputBytes.length) {
                             rawInputBytes = new byte[bufferSize];
                         }
+
                         readRawAudioCount = fisRawAudio.read(rawInputBytes);
                         if (readRawAudioCount == -1) {
                             readRawAudioEOS = true;
                         }
+
                         if (readRawAudioEOS) {
                             audioEncoder.queueInputBuffer(inputBufIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM);
                             sawInputEOS = true;
@@ -215,18 +221,6 @@ public class AacPcmCoder {
             extractor.release();
             fosDecoder.close();
         }
-    }
-
-    private static MediaCodec createAudioDecoder(String mediaMime) throws IOException {
-        MediaCodec codec = MediaCodec.createDecoderByType(mediaMime);
-        MediaFormat format = new MediaFormat();
-        format.setString(MediaFormat.KEY_MIME, AUDIO_MIME);
-        format.setInteger(MediaFormat.KEY_BIT_RATE, 64000);
-        format.setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1);
-        format.setInteger(MediaFormat.KEY_SAMPLE_RATE, 44100);
-        format.setInteger(MediaFormat.KEY_AAC_PROFILE, MediaCodecInfo.CodecProfileLevel.AACObjectLC);
-        codec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
-        return codec;
     }
 
     /**

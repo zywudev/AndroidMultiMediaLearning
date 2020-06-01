@@ -21,6 +21,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.wuzy.androidmultimedialearning.util.ThreadHelper;
+
 import java.util.Arrays;
 
 
@@ -28,7 +30,6 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
     private Context mContext;
     private SurfaceHolder mSurfaceHolder;
-    private Handler mWorkHandler;
     private String mCameraId;
     private CameraDevice mCameraDevice;
     private ImageReader mImageReader;
@@ -55,11 +56,10 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        HandlerThread handlerThread = new HandlerThread("camera2");
-        handlerThread.start();
-        mWorkHandler = new Handler(handlerThread.getLooper());
-        checkCamera();
-        openCamera();
+        ThreadHelper.getInstance().runOnHandlerThread(() -> {
+            checkCamera();
+            openCamera();
+        });
     }
 
     /**
@@ -114,7 +114,7 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
                             //buffer.get(data);
                             image.close();
                         }
-                    }, mWorkHandler);
+                    }, null);
 
                     createCameraPreview();
                 }
@@ -135,7 +135,7 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
                     camera.close();
                     mCameraDevice = null;
                 }
-            }, mWorkHandler);
+            }, null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -152,6 +152,7 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
             Surface imageReaderSurface = mImageReader.getSurface();
             captureRequestBuilder.addTarget(imageReaderSurface);
             captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
+
             mCameraDevice.createCaptureSession(Arrays.asList(surface, imageReaderSurface), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession session) {
@@ -166,7 +167,7 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
                 }
-            }, mWorkHandler);
+            }, null);
         } catch (Exception e) {
         }
     }
@@ -185,7 +186,6 @@ public class Camera2SurfaceView extends SurfaceView implements SurfaceHolder.Cal
         if (mImageReader != null) {
             mImageReader.close();
         }
-        mWorkHandler.getLooper().quitSafely();
     }
 
     private void closeCameraPreview() {
